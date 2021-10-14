@@ -1,5 +1,6 @@
 <?php
 require_once 'models/User.php';
+//include_path='.;C:\php\pear';
 
 class UserDaoMysql implements UserDAO {
     private $pdo;
@@ -78,6 +79,24 @@ class UserDaoMysql implements UserDAO {
         $sql->bindValue('token', $u->$token);
         $sql->bindValue('id', $u->$id);
         $sql->execute();        
+
+    }
+
+    public function insert(User $u) {
+        $sql = $this->pdo->prepare("INSERT INTO users (
+            email, password, name, birthdate, token
+        ) VALUES (
+            :email, :pasword, :name, :birthdate, :token
+        )");
+
+        $sql->bindValue(':email', $u->email);
+        $sql->bindValue(':password', $u->password);
+        $sql->bindValue(':name', $u->name);
+        $sql->bindValue(':birthdate',$u->birthdate);
+        $sql->bindValue(':token', $u->token);
+        $sql->execute();
+
+        
 
     }
 
