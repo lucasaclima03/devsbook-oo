@@ -33,8 +33,9 @@ class Auth {
     public function validateLogin($email, $password){        
         $user = $this->dao->findByEmail($email);
 
-        if($user) {
-            if(password_verify($password, $user->password)){
+        if($user) {   
+            
+            if(password_verify($password, $user->password)){                
                 $token = md5(time().rand(0,9999));
 
                 $_SESSION['token'] = $token;
